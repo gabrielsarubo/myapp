@@ -1,8 +1,8 @@
 import './index.css'
 
-const QuestionCardListItem = ({ title, desc, iconUri }) => {
+const CategoryListItem = ({ title, desc, iconUri }) => {
   return (
-    <div className='QuestionCardListItem'>
+    <div className='CategoryListItem'>
       <div className="icon-container">{iconUri}</div>
       <div className="main-container">
         <div className='h5 title'>{title}</div>
@@ -12,4 +12,4 @@ const QuestionCardListItem = ({ title, desc, iconUri }) => {
   )
 }
  
-export default QuestionCardListItem
+export default CategoryListItem

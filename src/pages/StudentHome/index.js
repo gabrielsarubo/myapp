@@ -1,10 +1,10 @@
 import Header from "../../components/Header"
-import QuestionCardListItem from "../../components/QuestionCardListItem"
+import CategoryListItem from "../../components/CategoryListItem"
 
 import './index.css'
 
 const StudentHome = () => {
-  const questionCategories = [
+  const categoriesList = [
     { title: 'Classe Gramatical', desc: 'Uma breve descricao sobre o tipo de exercicio', iconUri: '📚' },
     { title: 'Tradução EN → PT', desc: 'Uma breve descricao sobre o tipo de exercicio', iconUri: '🌎' },
     { title: 'Tradução PT → EN', desc: 'Uma breve descricao sobre o tipo de exercicio', iconUri: '📝' },
@@ -24,11 +24,11 @@ const StudentHome = () => {
           <main>
             <div className="categories-list">
               {
-                questionCategories.length > 0
+                categoriesList.length > 0
                   ? (
-                    questionCategories.map((category, index) => {
+                    categoriesList.map((category, index) => {
                       return (
-                        <QuestionCardListItem
+                        <CategoryListItem
                           iconUri={category.iconUri}
                           title={category.title}
                           desc={category.desc}

@@ -1,4 +1,4 @@
-.QuestionCardListItem {
+.CategoryListItem {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -11,15 +11,15 @@
   border: 2px solid #D6D8DA;
 }
 
-.QuestionCardListItem:hover {
+.CategoryListItem:hover {
   border-color: #007BFF;
   cursor: pointer;
   transform: translateY(-3px);
   transition: transform 300ms;
 }
 
-/* .QuestionCardListItem .title {} */
+/* .CategoryListItem .title {} */
 
-.QuestionCardListItem .desc {
+.CategoryListItem .desc {
   font-size: 15px;
 }
