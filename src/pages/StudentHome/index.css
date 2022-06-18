@@ -1,0 +1,22 @@
+.StudentHome header {
+  display: flex;
+}
+
+.StudentHome header .title {
+  margin-right: .7rem;
+}
+
+.StudentHome .badge-container > .body {
+  background-color: #6C757D;
+  padding: .6rem;
+  color: white;
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+.StudentHome .categories-list {
+  display: flex;
+  flex-wrap: wrap;
+}
