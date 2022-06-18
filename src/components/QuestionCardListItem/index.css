@@ -1,0 +1,25 @@
+.QuestionCardListItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 210px;
+  height: 230px;
+  padding: 24px 16px;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: 2px solid #D6D8DA;
+}
+
+.QuestionCardListItem:hover {
+  border-color: #007BFF;
+  cursor: pointer;
+  transform: translateY(-3px);
+  transition: transform 300ms;
+}
+
+/* .QuestionCardListItem .title {} */
+
+.QuestionCardListItem .desc {
+  font-size: 15px;
+}
