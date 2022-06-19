@@ -6,6 +6,7 @@ import SignUp from './pages/SignUp'
 import StudentHome from './pages/StudentHome'
 import StudentHistory from './pages/StudentHistory'
 import StudentProfile from './pages/StudentProfile'
+import { PracticeGrammar, PracticeTranslation } from './pages/Practice'
 // Other pages
 import NotFound from './pages/NotFound'
 
@@ -21,6 +22,9 @@ const App = () => {
         <Route path='/student' element={<StudentHome />} />
         <Route path='/student/history' element={<StudentHistory />} />
         <Route path='/student/profile' element={<StudentProfile />} />
+        {/* Practice */}
+        <Route path='/practice/grammar' element={<PracticeGrammar />} />
+        <Route path='/practice/translation' element={<PracticeTranslation />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>
