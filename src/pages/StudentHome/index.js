@@ -1,15 +1,13 @@
+import { useNavigate } from "react-router-dom"
+
 import Header from "../../components/Header"
 import CategoryListItem from "../../components/CategoryListItem"
 
 import './index.css'
 
 const StudentHome = () => {
-  const categoriesList = [
-    { title: 'Classe Gramatical', desc: 'Uma breve descricao sobre o tipo de exercicio', iconUri: '📚' },
-    { title: 'Tradução EN → PT', desc: 'Uma breve descricao sobre o tipo de exercicio', iconUri: '🌎' },
-    { title: 'Tradução PT → EN', desc: 'Uma breve descricao sobre o tipo de exercicio', iconUri: '📝' },
-  ]
-
+  const navigate = useNavigate()
+  
   return (
     <>
       <Header />
@@ -23,22 +21,24 @@ const StudentHome = () => {
           </header>
           <main>
             <div className="categories-list">
-              {
-                categoriesList.length > 0
-                  ? (
-                    categoriesList.map((category, index) => {
-                      return (
-                        <CategoryListItem
-                          iconUri={category.iconUri}
-                          title={category.title}
-                          desc={category.desc}
-                          key={index}
-                        />
-                      )
-                    })
-                  )
-                  : (<p>Não há categorias ainda.</p>)
-              }
+              <CategoryListItem
+                handleClick={() => navigate('/practice/grammar')}
+                iconUri='📚'
+                title='Classe Gramatical'
+                desc='Uma breve descricao sobre o tipo de exercicio'
+              />
+              <CategoryListItem
+                handleClick={() => navigate('/practice/translation')}
+                iconUri='🌎'
+                title='Tradução EN → PT'
+                desc='Uma breve descricao sobre o tipo de exercicio'
+              />
+              <CategoryListItem
+                handleClick={() => navigate('/practice/translation')}
+                iconUri='📝'
+                title='Tradução PT → EN'
+                desc='Uma breve descricao sobre o tipo de exercicio'
+              />
             </div>
           </main>
         </div>

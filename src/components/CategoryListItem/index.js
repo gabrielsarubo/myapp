@@ -1,8 +1,8 @@
 import './index.css'
 
-const CategoryListItem = ({ title, desc, iconUri }) => {
+const CategoryListItem = ({ handleClick, title, desc, iconUri }) => {
   return (
-    <div className='CategoryListItem'>
+    <div className='CategoryListItem' onClick={handleClick}>
       <div className="icon-container">{iconUri}</div>
       <div className="main-container">
         <div className='h5 title'>{title}</div>
