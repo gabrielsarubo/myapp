@@ -3,8 +3,19 @@
 :root {
   --primary: #007BFF;
   --brandBlack: #404040;
+  --brandGreen: #14BF96;
   --yellow: #FFC107;
   --lightGrayBorder: #E9ECEF;
+  --secondary: #6C757D;
+  --light: #F8F9FA;
+  --dark: #343A40; /* rename to globalDark */
+  --correct: #6EFF02;
+  --incorrect: #ff1e00;
+  --lightBorder:#e5e5e5;
+  --lightBlue: hsl(216deg, 98%, 75%);
+  --grayishBlue: hsl(210, 20%, 97%);
+  --muted: #6C757D;
+  --mainBorder: 2px solid #e5e5e5;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -19,6 +30,7 @@ h1, h2, h3, h4, h5, h6 {
 
 body {
   font-family: 'Nunito', sans-serif;
+  color: var(--dark);
 
   /* TODO check if the code below is gonna be necessary */
   /* Padding so that the Navbar.js doest not overlap any other content */
