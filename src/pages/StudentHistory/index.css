@@ -1,0 +1,13 @@
+.StudentHistory {
+
+}
+
+/* Summary section */
+.SummaryCard-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.SummaryCard-wrapper > * {
+  margin-right: 0.9rem;
+}

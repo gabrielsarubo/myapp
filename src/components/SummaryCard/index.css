@@ -1,0 +1,25 @@
+.SummaryCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+  width: 160px;
+  height: 160px;
+  padding: 1rem;
+
+  border: 2px solid var(--lightBorder);
+  border-radius: 8px;
+}
+
+.SummaryCard .heading {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--brandGreen);
+}
+
+.SummaryCard .description {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--muted);
+}
