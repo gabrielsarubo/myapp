@@ -87,7 +87,7 @@ const StudentProfile = () => {
              
               <div className="mb-3">
                 <label htmlFor="password" className="form-label">Nova senha</label>
-                <input type="password" id="passwordConfirm" className="form-control" value={password} onChange={e => setPassword(e.target.value)} placeholder="" />
+                <input type="password" id="passwordConfirm" className="form-control" value={password} onChange={e => setPassword(e.target.value)} placeholder="Nova senha" />
               </div>
               <button type='submit' className='btn btn-secondary' onClick={handleSenha}>Alterar senha</button>
             </form>
