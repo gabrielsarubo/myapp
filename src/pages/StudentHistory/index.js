@@ -1,10 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
+import { AuthContext } from '../../contexts/AuthContext'
+import axios from 'axios'
+
 import Header from '../../components/Header'
 import SummaryCard from '../../components/SummaryCard'
 
 import './index.css'
 
 const StudentHistory = () => {
+  const { authData } = useContext(AuthContext)
+
+  const [userFullReport, setUserFullReport] = useState([])
   const [summary, setSummary] = useState({
     total: 0,
     correctEasy: 0,
@@ -12,39 +18,12 @@ const StudentHistory = () => {
     correctHard: 0,
     incorrectHard: 0,
   })
-  
-  const userFullReport = [
-    {
-      category: "classeGramatical",
-      userAnswer: "adjetivo",
-      isAnswerCorrect: false,
-      question: {
-        text: "tree",
-        level: "facil"
-      }
-    },
-    {
-      category: "classeGramatical",
-      userAnswer: "substantivo",
-      isAnswerCorrect: true,
-      question: {
-        text: "tree",
-        level: "facil"
-      }
-    },
-    {
-      category: "enPt",
-      userAnswer: "árvore",
-      isAnswerCorrect: true,
-      question: {
-        text: "tree",
-        level: "facil"
-      }
-    }
-  ]
+
+  // Aux states
+  const [isLoading, setIsLoading] = useState(false)
 
   const generateSummarizedReport = (fullReport) => {
-    let correctEasy = 0 
+    let correctEasy = 0
     let incorrectEasy = 0
     let correctHard = 0
     let incorrectHard = 0
@@ -72,15 +51,43 @@ const StudentHistory = () => {
       correctHard,
       incorrectHard
     }
-    
+
     return summary
   }
 
-  useEffect(() => {
-    const summary = generateSummarizedReport(userFullReport)
+  const fetchData = async () => {
+    setIsLoading(true)
 
-    setSummary(summary)
-  }, [])
+    try {
+      // fetch user report
+      const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/report/${authData.userEmail}`, { headers: { "x-jwt-token": authData.userToken } })
+      const data = result.data
+      console.log(data)
+
+      setUserFullReport(data)
+      const summary = generateSummarizedReport(data)
+      setSummary(summary)
+    } catch (err) {
+      // set request error message
+      console.log('Failed to fetch user full report: ', err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const renderButton = () => {
+    return (
+      <div className="btn btn-dark" onClick={() => fetchData()}>
+        <span className="me-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-box-arrow-in-down" viewBox="0 0 16 16">
+            <path fillRule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z" />
+            <path fillRule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+          </svg>
+        </span>
+        {isLoading ? 'Importando...' : 'Carregar Histórico'}
+      </div>
+    )
+  }
 
   return (
     <>
@@ -91,6 +98,7 @@ const StudentHistory = () => {
           <main>
             {/* Resumo do historico */}
             <div className="history-summary mb-4">
+              <div className="mb-4">{renderButton()}</div>
               <h4 className='mb-4'>Resumo do histórico</h4>
               <div className="SummaryCard-wrapper">
                 <div className="SummaryCard-wrapper">
@@ -120,7 +128,7 @@ const StudentHistory = () => {
                   <tbody>
                     {
                       // Returns rows populated with the data of one User Full Report
-                      userFullReport.length ? (
+                      userFullReport.length > 0 ? (
                         userFullReport.map((reportEntry, index) => {
                           return (
                             <tr key={index}>
