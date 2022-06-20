@@ -1,9 +1,18 @@
+import { useEffect, useState } from 'react'
 import Header from '../../components/Header'
 import SummaryCard from '../../components/SummaryCard'
 
 import './index.css'
 
 const StudentHistory = () => {
+  const [summary, setSummary] = useState({
+    total: 0,
+    correctEasy: 0,
+    incorrectEasy: 0,
+    correctHard: 0,
+    incorrectHard: 0,
+  })
+  
   const userFullReport = [
     {
       category: "classeGramatical",
@@ -34,6 +43,45 @@ const StudentHistory = () => {
     }
   ]
 
+  const generateSummarizedReport = (fullReport) => {
+    let correctEasy = 0 
+    let incorrectEasy = 0
+    let correctHard = 0
+    let incorrectHard = 0
+
+    fullReport.forEach(entry => {
+      if (entry.isAnswerCorrect) {
+        if (entry.question.level === 'facil') {
+          correctEasy++
+        } else {
+          correctHard++
+        }
+      } else {
+        if (entry.question.level === 'facil') {
+          incorrectEasy++
+        } else {
+          incorrectHard++
+        }
+      }
+    })
+
+    const summary = {
+      total: fullReport.length,
+      correctEasy,
+      incorrectEasy,
+      correctHard,
+      incorrectHard
+    }
+    
+    return summary
+  }
+
+  useEffect(() => {
+    const summary = generateSummarizedReport(userFullReport)
+
+    setSummary(summary)
+  }, [])
+
   return (
     <>
       <Header />
@@ -42,18 +90,15 @@ const StudentHistory = () => {
         <div className="container mt-5">
           <main>
             {/* Resumo do historico */}
-            <div className="history-summary mb-5">
+            <div className="history-summary mb-4">
               <h4 className='mb-4'>Resumo do histórico</h4>
               <div className="SummaryCard-wrapper">
                 <div className="SummaryCard-wrapper">
-                  <SummaryCard info={{ title: 100, desc: 'Questões respondidas' }} />
-                  <SummaryCard info={{ title: 100, desc: 'Acertos em questões fáceis' }} />
-                  <SummaryCard info={{ title: 100, desc: 'Erros em questões fáceis' }} />
-                  <SummaryCard info={{ title: 100, desc: 'Acertos em questões difíceis' }} />
-                  <SummaryCard info={{ title: 100, desc: 'Erros em questões difíceis' }} />
-                  {/* {Object.keys(summary).map((key, index) => {
-                      return <SummaryCard info={summary[key]} key={key} />
-                    })} */}
+                  <SummaryCard info={{ title: summary.total, desc: 'Questões respondidas' }} />
+                  <SummaryCard info={{ title: summary.correctEasy, desc: 'Acertos em questões fáceis' }} />
+                  <SummaryCard info={{ title: summary.incorrectEasy, desc: 'Erros em questões fáceis' }} />
+                  <SummaryCard info={{ title: summary.correctHard, desc: 'Acertos em questões difíceis' }} />
+                  <SummaryCard info={{ title: summary.incorrectHard, desc: 'Erros em questões difíceis' }} />
                 </div>
               </div>
             </div>

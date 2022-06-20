@@ -6,8 +6,10 @@
 .SummaryCard-wrapper {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .SummaryCard-wrapper > * {
   margin-right: 0.9rem;
+  margin-bottom: 0.9rem;
 }
