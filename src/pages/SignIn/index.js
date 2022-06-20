@@ -16,9 +16,12 @@ const SignIn = () => {
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
   const [message, setMessage] = useState('')
+  // Aux states
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = e => {
     e.preventDefault()
+    setLoading(true)
 
     const baseURL = process.env.REACT_APP_BASE_URL + '/users/login'
     axios.post(baseURL, {
@@ -41,6 +44,9 @@ const SignIn = () => {
         setMessage(err.response.data)
         console.error('Failed to sign in: ', err)
       })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   return (
@@ -59,10 +65,10 @@ const SignIn = () => {
           <label htmlFor="password" className="form-label">Senha</label>
           <input type="password" id="password" className="form-control" onChange={e => setPassword(e.target.value)} placeholder="Sua senha" required />
         </div>
-        <text className="message">{message}</text>
+        <div className="message">{message}</div>
         <button type="submit" className="btn btn-primary w-100"
           disabled={(!(email !== '' && password !== '')) || (false)}>
-          Entrar
+          {loading ? 'Carregando...' : 'Entrar'}
         </button>
         <p className="mt-3 mb-0 text-muted text-center">
           Não tem conta?&nbsp;

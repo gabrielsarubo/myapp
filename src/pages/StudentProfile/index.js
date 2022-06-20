@@ -13,7 +13,7 @@ const StudentProfile = () => {
   // Form states
   const [username, setUsername] = useState(authData.userName)
   const [password, setPassword] = useState('')
-  const [message, setMessage] = useState('')
+  // const [message, setMessage] = useState('')
 
   const handleNome = (e) => {
     e.preventDefault()
@@ -34,7 +34,7 @@ const StudentProfile = () => {
         navigate('/student')
       })
       .catch(err => {
-        setMessage(err.response.data)
+        // setMessage(err.response.data)
         console.error('Failed to sign in: ', err)
       })
   }
@@ -50,7 +50,7 @@ const StudentProfile = () => {
         navigate('/student')
       })
       .catch(err => {
-        setMessage(err.response.data)
+        // setMessage(err.response.data)
         console.error('Failed to sign in: ', err)
       })
   }
