@@ -1,0 +1,33 @@
+.actions-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 2.5rem 0;
+  border-top: 2px solid #E1E2E3;
+  background-color: white;
+}
+
+.actions-container[data-state="correct"] {
+  background-color: #D7FFB8;
+  border-top: none;
+}
+
+.actions-container[data-state="incorrect"] {
+  background-color: #FFDFE0;
+  border-top: none;
+}
+
+.actions-container .content{
+  display: flex;
+  justify-content: space-between;
+}
+
+.actions-container .content .content__left{
+  display: flex;
+  flex-grow: 1;
+}
+
+.actions-container .content .content__left > *{
+  margin-right: 1rem;
+}
