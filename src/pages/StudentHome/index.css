@@ -4,6 +4,7 @@
 
 .StudentHome header .title {
   margin-right: .7rem;
+  text-transform: capitalize;
 }
 
 .StudentHome .badge-container > .body {

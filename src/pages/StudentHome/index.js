@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from "react-router-dom"
 
 import Header from "../../components/Header"
@@ -22,19 +22,19 @@ const StudentHome = () => {
           <main>
             <div className="categories-list">
               <CategoryListItem
-                handleClick={() => navigate('/practice/grammar')}
+                handleClick={() => navigate('/practice/classeGramatical')}
                 iconUri='📚'
                 title='Classe Gramatical'
                 desc='Uma breve descricao sobre o tipo de exercicio'
               />
               <CategoryListItem
-                handleClick={() => navigate('/practice/translation')}
+                handleClick={() => navigate('/practice/enPt')}
                 iconUri='🌎'
                 title='Tradução EN → PT'
                 desc='Uma breve descricao sobre o tipo de exercicio'
               />
               <CategoryListItem
-                handleClick={() => navigate('/practice/translation')}
+                handleClick={() => navigate('/practice/ptEn')}
                 iconUri='📝'
                 title='Tradução PT → EN'
                 desc='Uma breve descricao sobre o tipo de exercicio'

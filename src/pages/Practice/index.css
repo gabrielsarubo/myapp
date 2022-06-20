@@ -10,6 +10,7 @@
   padding: .65rem;
   margin-bottom: 1rem;
   border-radius: 8px;
+  font-size: 1.1rem;
   border: 2px solid #E1E2E3;
   background-color: #F5F5F5;
 }
@@ -19,33 +20,9 @@
   width: 100%;
   height: 270px;
   padding: .65rem;
+  font-size: 1.1rem;
   border-radius: 8px;
   border: 2px solid #E1E2E3;
-}
-
-.Practice .actions-container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 2rem 0;
-  border-top: 2px solid #E1E2E3;
-  background-color: white;
-}
-
-.Practice .actions-container[data-state="correct"] {
-  background-color: #D7FFB8;
-  border-top: none;
-}
-
-.Practice .actions-container[data-state="incorrect"] {
-  background-color: #FFDFE0;
-  border-top: none;
-}
-
-.Practice .actions-container .content{
-  display: flex;
-  justify-content: space-between;
 }
 
 /* AlternativeItem */
@@ -73,6 +50,8 @@
   padding-bottom: 15px;
   border: 2px solid #E1E2E3;
   border-radius: 6px;
+  font-size: 1.1rem;
   line-height: 1;
   text-align: left;
+  text-transform: capitalize;
 }
