@@ -1,21 +1,49 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+// Context
+import { AuthContext } from '../../contexts/AuthContext';
 // Assets
 import './index.css';
 import Logo from '../../assets/app-logo.png';
 
 const SignIn = () => {
+  // React Router
+  const navigate = useNavigate()
+  // Context
+  const { signIn } = useContext(AuthContext)
+  // Form states
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
 
   const handleSubmit = e => {
     e.preventDefault()
+
+    const baseURL = process.env.REACT_APP_BASE_URL + '/users/login'
+    axios.post(baseURL, {
+      email: email,
+      senha: password
+    })
+      .then(res => {
+        // Store data in context
+        signIn({
+          userToken: res.data.token,
+          userId: res.data.usuario.dados,
+          isAdmin: undefined,
+          userEmail: res.data.usuario.email,
+          userName: res.data.usuario.nome,
+        })
+        console.log('Sign in successfull!')
+        navigate('/student')
+      })
+      .catch(err => {
+        console.error('Failed to sign in: ', err)
+      })
   }
 
   return (
     // Container for the entire sign component
     <div className="SignIn">
-    
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <img src={Logo} alt="" />
