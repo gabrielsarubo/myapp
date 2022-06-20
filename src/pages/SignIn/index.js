@@ -30,7 +30,7 @@ const SignIn = () => {
         signIn({
           userToken: res.data.token,
           userId: res.data.usuario.dados,
-          isAdmin: undefined,
+          isAdmin: res.data.usuario.isAdmin,
           userEmail: res.data.usuario.email,
           userName: res.data.usuario.nome,
         })
