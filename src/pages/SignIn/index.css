@@ -12,3 +12,9 @@
 }
 
 .SignIn a { text-decoration: none; }
+
+.message{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}

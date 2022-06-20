@@ -1,23 +1,23 @@
+import { useContext, useState } from 'react';
 import { useNavigate } from "react-router-dom"
 
 import Header from "../../components/Header"
 import CategoryListItem from "../../components/CategoryListItem"
+import { AuthContext } from '../../contexts/AuthContext';
 
 import './index.css'
 
 const StudentHome = () => {
   const navigate = useNavigate()
-  
+  const { authData } = useContext(AuthContext)
+
   return (
     <>
       <Header />
       <div className="StudentHome">
         <div className="container mt-5">
           <header className="mb-4">
-            <h3 className="title">Jane Doe</h3>
-            <div className="badge-container">
-              <div className="body">⚡ 1200 Pts</div>
-            </div>
+            <h3 className="title">{authData.userName}</h3>
           </header>
           <main>
             <div className="categories-list">

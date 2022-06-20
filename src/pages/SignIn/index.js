@@ -15,6 +15,7 @@ const SignIn = () => {
   // Form states
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
+  const [message, setMessage] = useState('')
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -37,6 +38,7 @@ const SignIn = () => {
         navigate('/student')
       })
       .catch(err => {
+        setMessage(err.response.data)
         console.error('Failed to sign in: ', err)
       })
   }
@@ -57,7 +59,7 @@ const SignIn = () => {
           <label htmlFor="password" className="form-label">Senha</label>
           <input type="password" id="password" className="form-control" onChange={e => setPassword(e.target.value)} placeholder="Sua senha" required />
         </div>
-
+        <text className="message">{message}</text>
         <button type="submit" className="btn btn-primary w-100"
           disabled={(!(email !== '' && password !== '')) || (false)}>
           Entrar
