@@ -15,6 +15,7 @@ const Practice = () => {
 
   const { authData } = useContext(AuthContext)
 
+  const [questionId, setQuestionId] = useState()
   const [questionText, setQuestionText] = useState()
   const [userAnswer, setUserAnswer] = useState()
   const [options, setOptions] = useState([])
@@ -49,9 +50,10 @@ const Practice = () => {
       setQuestionText('Não é possivel carregar questões deste tipo de categoria')
       return
     }
-    
+
     loadQuestionAsync(categoryId, 'facil')
       .then((question => {
+        setQuestionId(question.id)
         setQuestionText(question.palavra)
         setCorrectAnswer(question.resposta)
         setOptions(renderOptions(question.alternativas, question.resposta))
@@ -82,8 +84,29 @@ const Practice = () => {
     setQuestionStatus('unanswered')
     setIsLoading(true)
 
+    // Send new history entry after user answered question
+    axios.post(`${process.env.REACT_APP_BASE_URL}/history/new`, {
+      categoryId: categoryId,
+      questionId: questionId,
+      userEmail: authData.userEmail,
+      userAnswer: userAnswer,
+      isAnswerCorrect: questionStatus === 'correct'
+    }, {
+      headers: {
+        "x-jwt-token": authData.userToken
+      }
+    })
+      .then(() => {
+        console.log('Successfully created a new history entry')
+      })
+      .catch((err) => {
+        console.log('Error trying to create a new history entry: ', err)
+      })
+
+    // Load a new question
     loadQuestionAsync(categoryId, 'facil')
       .then((question => {
+        setQuestionId(question.id)
         setQuestionText(question.palavra)
         setCorrectAnswer(question.resposta)
         setOptions(renderOptions(question.alternativas, question.resposta))
@@ -118,7 +141,7 @@ const Practice = () => {
             {
               options.length > 0 && options.map((option, index) => {
                 return (
-                  <div className="col-12" key={(index+1)*Math.random()}>
+                  <div className="col-12" key={(index + 1) * Math.random()}>
                     <input type="radio" className="btn-check" name="options" id={`option${index}`} value={option} onChange={handleRadioChange} autoComplete="off" />
                     <label className="btn btn-outline-secondary options w-100" htmlFor={`option${index}`}>{option}</label>
                   </div>
