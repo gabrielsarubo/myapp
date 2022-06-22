@@ -5,7 +5,8 @@ const ActionsContainer = ({
   correctAsnwer,
   handleVerify,
   handleContinue,
-  handleFinish
+  handleFinish,
+  isLoading
 }) => {
   return (
     <div className="actions-container" data-state={questionStatus}>
@@ -27,9 +28,11 @@ const ActionsContainer = ({
               <div className="content__right">
                 <button className={`btn btn-${questionStatus === 'unanswered' ? 'primary' : questionStatus === 'correct' ? 'success' : 'danger'} btn-lg`} onClick={questionStatus === 'unanswered' ? handleVerify : handleContinue}>
                   {
-                    questionStatus === 'unanswered'
-                      ? ('Verificar')
-                      : ('Continuar')
+                    isLoading
+                      ? ('Carregando...')
+                      : questionStatus === 'unanswered'
+                        ? ('Verificar')
+                        : ('Continuar')
                   }
                 </button>
               </div>

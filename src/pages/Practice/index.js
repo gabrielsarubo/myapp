@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import axios from 'axios'
+import { AuthContext } from '../../contexts/AuthContext'
 
 import ActionsContainer from '../../components/ActionsContainer'
 
@@ -9,42 +11,89 @@ const Practice = () => {
   // React Router
   const navigate = useNavigate()
   const params = useParams()
+  const { categoryId } = params
+
+  const { authData } = useContext(AuthContext)
 
   const [questionText, setQuestionText] = useState()
   const [userAnswer, setUserAnswer] = useState()
-
+  const [options, setOptions] = useState([])
   const [correctAsnwer, setCorrectAnswer] = useState()
 
   const [questionStatus, setQuestionStatus] = useState('unanswered')
 
-  const loadQuestionAsync = () => {
-    return {
-      id: "WBfI6Px5SLDdslkOf8c1",
-      palavra: "porta",
-      resposta: "door",
-      alternativas: [
-        "light",
-        "house",
-        "car"
-      ]
+  const [isLoading, setIsLoading] = useState(false)
+
+  const loadQuestionAsync = async (categoryId, dificuldade) => {
+    try {
+      // fetch question from API
+      const result = await axios
+        .post(`${process.env.REACT_APP_BASE_URL}/questao/${categoryId}`, {
+          dificuldade: dificuldade,
+          colecao: categoryId
+        }, {
+          headers: {
+            "x-jwt-token": authData.userToken
+          }
+        })
+
+      return result.data
+    } catch (error) {
+      throw new Error(error)
     }
   }
 
   useEffect(() => {
-    console.log(params.categoryId)
-
-    // Nao fazer chamadas asincronas dentro do useEffect
-    // encontrar outra forma de fazer isso
-    const question = loadQuestionAsync()
-    setQuestionText(question.palavra)
-    setCorrectAnswer(question.resposta)
-
+    // Prevent app from making API calls to a category other than 'classeGramatical'
+    if (categoryId !== 'classeGramatical') {
+      setQuestionText('Não é possivel carregar questões deste tipo de categoria')
+      return
+    }
+    
+    loadQuestionAsync(categoryId, 'facil')
+      .then((question => {
+        setQuestionText(question.palavra)
+        setCorrectAnswer(question.resposta)
+        setOptions(renderOptions(question.alternativas, question.resposta))
+      }))
+      .catch((error) => {
+        console.log('Failed to fetch question: ', error)
+      })
   }, [])
 
-  const handleContinue = () => {
-    alert('Next question')
+  /**
+   * Render a shuffled list of options containing the user answer
+   * @param {Array} options 
+   * @param {Array} answer 
+   * @returns shuffled options
+   */
+  const renderOptions = (options, answer) => {
+    let _options = [...options, answer]
+    _options = _options.sort(() => Math.random() - 0.5)
+    return _options
+  }
 
+  const handleRadioChange = (e) => {
+    const { value } = e.target
+    setUserAnswer(value)
+  }
+
+  const handleContinue = () => {
     setQuestionStatus('unanswered')
+    setIsLoading(true)
+
+    loadQuestionAsync(categoryId, 'facil')
+      .then((question => {
+        setQuestionText(question.palavra)
+        setCorrectAnswer(question.resposta)
+        setOptions(renderOptions(question.alternativas, question.resposta))
+      }))
+      .catch((error) => {
+        console.log('Failed to fetch question: ', error)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   const handleVerify = () => {
@@ -64,13 +113,13 @@ const Practice = () => {
       return (
         <>
           <h3 className='mb-4'>Escolha a classe gramatical</h3>
-          <div className="question-title">{questionText}</div>
+          <div className="question-title">{questionText || 'Carregando pergunta...'}</div>
           <div className="container-options row gy-2 mt-3">
             {
-              ['substantivo', 'adjetivo', 'verbo', 'preposição'].map((option, index) => {
+              options.length > 0 && options.map((option, index) => {
                 return (
-                  <div className="col-12" key={index}>
-                    <input type="radio" className="btn-check" name="options" id={`option${index}`} autoComplete="off" />
+                  <div className="col-12" key={(index+1)*Math.random()}>
+                    <input type="radio" className="btn-check" name="options" id={`option${index}`} value={option} onChange={handleRadioChange} autoComplete="off" />
                     <label className="btn btn-outline-secondary options w-100" htmlFor={`option${index}`}>{option}</label>
                   </div>
                 )
@@ -108,6 +157,7 @@ const Practice = () => {
         handleVerify={handleVerify}
         handleContinue={handleContinue}
         handleFinish={handleFinish}
+        isLoading={isLoading}
       />
     </div>
   )
