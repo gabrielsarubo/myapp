@@ -1,10 +1,13 @@
 import { Link, useLocation } from 'react-router-dom'
+import { useContext } from 'react'
 
 import './index.css'
 import Logo from '../../assets/app-logo.png'
+import { AuthContext } from '../../contexts/AuthContext';
 
 const Header = () => {
   const location = useLocation()
+  const { signOut } = useContext(AuthContext)
   
   return (
     <div className="Header container-fluid">
@@ -20,7 +23,7 @@ const Header = () => {
             <span className='logo__title'>Academy</span>
           </div>
           <ul>
-            <li><Link to='/signin'><i className="bi bi-box-arrow-right"></i>&nbsp;&nbsp;Sair</Link></li>
+            <li onClick={signOut}><Link to='/signin'><i className="bi bi-box-arrow-right"></i>&nbsp;&nbsp;Sair</Link></li>
           </ul>
         </nav>
       </div>
