@@ -1,0 +1,7 @@
+export { default as NotFound } from './NotFound'
+export { default as Practice } from './Practice'
+export { default as SignIn } from './SignIn'
+export { default as SignUp } from './SignUp'
+export { default as StudentHistory } from './StudentHistory'
+export { default as StudentHome } from './StudentHome'
+export { default as StudentProfile } from './StudentProfile'
